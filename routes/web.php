@@ -37,7 +37,7 @@ Auth::routes();
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('blog/{id}/{name}',[BlogController::class,'show'])->name('blog.show');
-Route::post('blog/like/{id}',[BlogController::class,'like'])->name('blog.like');
+Route::post('blog-like/{id}',[BlogController::class,'like'])->name('blog.like');
 
 Route::group(['middleware' => 'auth'],function(){
     Route::resource('profile',UserController::class);

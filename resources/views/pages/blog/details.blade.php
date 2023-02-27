@@ -197,12 +197,21 @@
                 <div class="fixed-option-c">
                   {{-- <i class="lar la-heart-o"></i> --}}
                   @auth
-                  <a href="{{ route('blog.like',$blog->id) }}"> <i class="las la-heart"></i></a>
-                  @else    
-                  <a href="{{ route('login') }}"> <i class="lar la-heart"></i></a>
+                    <form id="like-unlike" method="POST" action="{{ route('blog.like',$blog->id) }}">
+                      @csrf
+                    </form>
+                    <a onclick="document.getElementById('like-unlike').submit()"> <i @class([
+                      "lar" => !$blog->is_liked,
+                      "la" => $blog->is_liked,
+                      "la-heart"
+                      ])></i></a>
+                  @else
+                    <a href="{{ route('login') }}"> <i class="las la-heart"></i></a>
                   @endauth
                   {{-- <i class="lar la-heart"></i> --}}
-                  <div class="label-count bg-danger position-relative">1</div>
+                  <div class="label-count bg-danger position-relative">
+                    {{ $blog->likes->count() }}
+                  </div>
                 </div>
               </div>
   

@@ -26,10 +26,27 @@ class Blog extends Model
       * 3 => write's pen
       */
 
+    protected $appends = [
+        'is_liked'
+    ];
     protected function type(): Attribute
     {
         return Attribute::make(
             get: fn ($value) => ucfirst($value),
+        );
+    }
+    protected function isLiked(): Attribute
+    {
+        $liked = false;
+        try {
+            if(BlogLike::where([['blog_id',$this->id],['user_id',auth()->user()->id]])->exists()){
+                $liked = true;
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+        return Attribute::make(
+            get: fn ($value) => $liked,
         );
     }
 
